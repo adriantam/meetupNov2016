@@ -1,0 +1,140 @@
+Use of Interfaces in Go
+
+Go Meetup
+Nov 8, 2016
+
+Adrian Tam
+Sandvine
+
+* What is Interface?
+
+Interface is:
+- a set of methods
+- also a type
+
+Interface provides a way to specify the behavior of an object.
+Similar (but not identical) to a pure abstract class in C++
+
+* Example
+Sort Interface
+.code sortInterface.go /type Interface interface/,
+
+* Example
+.play sort1/sort1.go /type foo /,
+
+* Example
+.play sort2/sort2.go /type moo /,
+
+* Empty Interface
+
+interface{} is also a type
+Since its set of method is empty, all type satisfies this interface
+.code empty/empty.go /func main()/,
+
+
+* Why are Interfaces Important?
+
+- Abstraction and Generalization
+- Information Hiding
+
+* Abstraction and Generalization
+- Reduce duplication
+- Avoid repetition
+
+* Abstraction and Generalization
+.code shape/shapes.go /type Shape/,
+
+* Abstraction and Generalization
+.play shape/main.go /PaintCost/,
+
+* Information Hiding
+- Segregation of design decisions
+- Provide a way to ignore the implementation details
+- A way to allow clean unit testing
+
+* Example (Provider and User)
+2 Structs:
+Provider - SOAP client to get information
+User - Using the information given by the provider 
+
+* Example (Provider and User)
+.code provider/provider.go /type Information /,
+
+* Example (Provider and User)
+.code provider/user.go /type User /,
+
+* Example (Provider and User)
+.code provider/providerInterface.go /type ProviderInterface/,
+
+* Example (Provider and User)
+.code provider/user2.go /type User2 /,
+
+* Example (Provider and User)
+.code provider/user2_test.go /type mockProvider/,
+
+* Which object Oriented pattern cannot be achieved in GoLang?
+
+* No Hierachy and No Type Inheritance
+- GoLang programmer is not required to declare that two types are related ahead of time
+- A particular struct can satisfy many interfaces at once without explict declaration
+
+*  
+
+.image allnotlost.jpg
+
+* Composition
+.code composition/readerwriter.go /type Reader/,
+
+* Composition
+.code composition/comp.go /type Walker/,
+
+* Characteristics of an Interface
+- Can be passed into a function via parameter
+- Static checked at compile time
+- Dynamic checked on demand
+
+* Interface as Parameter
+.play shape/main.go /PaintCost/,
+
+* Static Checking
+.play badSort/main.go /type mystruct/,
+
+* Dynamic Checking and Type Conversion
+.play dynamic/main.go /type emptyInterface/,
+
+* Dynamic Checking and Type Conversion
+.play dynamic2/main.go /type emptyInterface/,
+
+* Common Interface Issues
+.image gotcha.jpg
+- Interface that modifies its data structure
+- Interface that uses itself as parameter
+
+* Interface that Modifies
+.play badmodify/badmodify.go
+
+* Interface that Modifies
+.play goodmodify/goodmodify.go
+
+
+* Interface that Uses Itself as Parameter
+.play badequal/badequal.go
+
+* Interface that Uses Itself as Parameter
+.play goodequal/goodequal.go
+
+
+* Implementation Details in GoLang
+
+1. Every variable has a static type - all types are known and fixed at comiple time
+
+2. Variable of interface type always has the same static type, though the value may change
+
+3. Interface composed of
+  - Concrete Value
+  - Value Descriptor
+
+* Reflect
+.play reflector/main.go /type emptyInterface/,
+
+* Questions?
